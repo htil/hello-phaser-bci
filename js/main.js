@@ -1,6 +1,8 @@
 window.threshHold = 10;
 document.getElementById("threshold").value = window.threshHold;
 window.relativeBeta = 0;
+var timeout = 2000;
+
 var nodeConnect = new NodeSocket();
 window.isTakeoff = false;
 
@@ -63,7 +65,7 @@ function create() {
         // make drone go down if not at min height
       }
     }
-  }, 500);
+  }, timeout);
 }
 
 function update(time, delta) {
