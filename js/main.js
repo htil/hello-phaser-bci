@@ -1,4 +1,5 @@
-window.threshHold = 0.05;
+window.threshHold = 10;
+document.getElementById("threshold").value = window.threshHold;
 window.relativeBeta = 0;
 var nodeConnect = new NodeSocket();
 window.isTakeoff = false;
@@ -41,11 +42,18 @@ function create() {
   emitter.startFollow(logo);
 
   setInterval(() => {
+    //console.log(document.getElementById("threshold").value);
+    if (!Number.isNaN(window.relativeBeta)) {
+      document.getElementById("power").innerHTML =
+        window.relativeBeta.toFixed(3) * 100;
+    }
     if (window.isTakeoff == false) {
       return 0;
     } else {
-      console.log(isTakeoff);
-      if (window.relativeBeta > window.threshHold) {
+      if (
+        window.relativeBeta * 100 >
+        document.getElementById("threshold").value
+      ) {
         logo.setVelocityY(-100);
         nodeConnect.up();
         // make drone go up if not at max height
@@ -75,7 +83,8 @@ function update(time, delta) {
 function bindButtons(id, func) {
   document.getElementById(id).onclick = func;
 }
-
+//var p = document.getElementById("power").innerHTML = ;
+//console.log(p);
 bindButtons("takeoff", nodeConnect.takeOff);
 bindButtons("land", nodeConnect.land);
 bindButtons("up", nodeConnect.up);
