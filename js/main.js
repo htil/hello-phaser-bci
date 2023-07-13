@@ -5,6 +5,7 @@ var timeout = 2000;
 
 var nodeConnect = new NodeSocket();
 window.isTakeoff = false;
+window.land = true;
 
 var config = {
   type: Phaser.AUTO,
@@ -50,6 +51,7 @@ function create() {
         window.relativeBeta.toFixed(3) * 100;
     }
     if (window.isTakeoff == false) {
+      logo.setVelocityY(100);
       return 0;
     } else {
       if (
@@ -59,10 +61,15 @@ function create() {
         logo.setVelocityY(-100);
         nodeConnect.up();
         // make drone go up if not at max height
-      } else {
+      } else if (
+        window.relativeBeta * 100 <
+        document.getElementById("threshold").value
+      ) {
         logo.setVelocityY(100);
         nodeConnect.down();
         // make drone go down if not at min height
+      } else {
+        //logo.setVelocityY(100);
       }
     }
   }, timeout);

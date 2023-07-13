@@ -15,6 +15,7 @@ function sendMessage(message_text) {
 module.exports.init = () => {
   server.on("message", (msg, info) => {
     console.log("Data received from server : " + msg.toString());
+    console.log(info);
     console.log(
       "Received %d bytes from %s:%d\n",
       msg.length,

@@ -23,11 +23,12 @@ var Server = function (browserPort) {
 };
 
 let height = 120; //cm
-let heightMaxThreshold = 200;
+let heightMaxThreshold = 300;
 let heightMinThreshold = 20;
 
 Server.prototype.handleConnection = function (sock) {
   socket = sock;
+
   socket.on("error", () => {});
   socket.on("up", (distance) => {
     if (height < heightMaxThreshold) {
@@ -49,6 +50,7 @@ Server.prototype.handleConnection = function (sock) {
       console.log("Height Min Reached");
     }
   });
+
   socket.on("land", () => {
     console.log("land");
     tello.land();
@@ -58,6 +60,7 @@ Server.prototype.handleConnection = function (sock) {
     height = 120;
     tello.takeoff();
   });
+
   /*
   socket.on("power", (msg) => {
     power = msg;
@@ -121,7 +124,7 @@ const rl = readline.createInterface({
 
 rl.question("Press enter to start ", (answer) => {
   //moveDrone();
-  //tello.takeoff();
+  tello.takeoff();
   //setTimeout(() => tello.land(), 3000);
   rl.close();
 });
